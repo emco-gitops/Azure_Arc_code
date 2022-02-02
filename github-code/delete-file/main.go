@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/google/go-github/v40/github"
 	"golang.org/x/oauth2"
@@ -12,7 +13,7 @@ func main() {
 	repoName := "New-test-repo"
 	path := "arc-k8s-demo/namespaces/team-a.yaml"
 	userName := "chitti-intel"
-	githubToken := "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"
+	githubToken := os.Getenv("GITTOKEN")
 	commitMessage := "Deleting File"
 	// Create a new client
 	ctx := context.Background()

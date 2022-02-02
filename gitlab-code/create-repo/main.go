@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/fluxcd/go-git-providers/gitlab"
 	"github.com/fluxcd/go-git-providers/gitprovider"
@@ -15,7 +16,7 @@ const (
 func main() {
 	// Create a new client
 	ctx := context.Background()
-	gitLabToken := "glpat-VsaWds-rWtbx6eM5ejBm"
+	gitLabToken := os.Getenv("GITLABTOKEN")
 	c, err := gitlab.NewClient(gitLabToken, "")
 	//checkErr(err)
 	fmt.Println(err)

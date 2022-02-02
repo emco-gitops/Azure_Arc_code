@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/fluxcd/go-git-providers/github"
 	"github.com/fluxcd/go-git-providers/gitprovider"
@@ -15,9 +16,9 @@ const (
 func main() {
 	// Create a new client
 	ctx := context.Background()
-	githubToken := "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"
+	githubToken := os.Getenv("GITTOKEN")
 	userName := "chitti-intel"
-	repoName := "New-test-repo"
+	repoName := "New-test-repoV3"
 	c, err := github.NewClient(gitprovider.WithOAuth2Token(githubToken), gitprovider.WithDestructiveAPICalls(true))
 	if err != nil {
 		fmt.Println(err)
@@ -46,5 +47,10 @@ func deleteRepo(ctx context.Context, c gitprovider.Client, userName string, repo
 		fmt.Println(err)
 	}
 	//delete repo
-	fmt.Println(userRepo.Delete(ctx))
+	err = userRepo.Delete(ctx)
+
+        if err != nil {
+		fmt.Println(err)
+        }
+	fmt.Println("Repo Deleted")
 }

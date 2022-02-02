@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/xanzy/go-gitlab"
 )
 
 func main() {
 	// Create a new client
-	gitLabToken := "glpat-VsaWds-rWtbx6eM5ejBm"
+	gitLabToken := os.Getenv("GITLABTOKEN")
 	c, err := gitlab.NewClient(gitLabToken, nil)
 	if err != nil {
 		fmt.Println(err)

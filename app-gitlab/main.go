@@ -3,6 +3,7 @@ package main
 import (
 	"emcogitlab"
 	"fmt"
+	"os"
 
 	rawgitlab "github.com/xanzy/go-gitlab"
 )
@@ -10,7 +11,7 @@ import (
 func main() {
 	// //Create a new client
 	// ctx := context.Background()
-	// gitLabToken := "glpat-VsaWds-rWtbx6eM5ejBm"
+	// gitLabToken := os.Getenv("GITLABTOKEN")
 	// repoName := "Test-Repo"
 	// userName := "chitti-intel"
 	// c, err := emcogitlab.CreateClient(gitLabToken)
@@ -29,7 +30,7 @@ func main() {
 	// Create a new client
 	repoName := "Test-Repo"
 	userName := "chitti-intel"
-	gitLabToken := "glpat-VsaWds-rWtbx6eM5ejBm"
+	gitLabToken := os.Getenv("GITLABTOKEN")
 	c, err := emcogitlab.CreateRawClient(gitLabToken)
 	if err != nil {
 		fmt.Println(err)

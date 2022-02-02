@@ -4,16 +4,17 @@ import (
 	"context"
 	"emcogithub"
 	"fmt"
+	"os"
 
 	"github.com/fluxcd/go-git-providers/gitprovider"
 )
 
 func main() {
 
-	repoName := "Azure-test-repo-two"
+	repoName := "Azure-test-repo-three"
 	// path := "arc-k8s-demo/namespaces/team-b.yaml"
 	userName := "chitti-intel"
-	githubToken := "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"
+	githubToken := os.Getenv("GITTOKEN")
 	// commitMessage := "Deleting File"
 	// Create a new client
 	ctx := context.Background()
@@ -34,8 +35,8 @@ func main() {
 	// }
 	// emcogithub.DeleteRepo(ctx, c, userName, repoName)
 	files := []gitprovider.CommitFile{}
-	files = emcogithub.Iterate("/home/ubuntu/go_projects/src/new-k8s-test-code/arc-k8s-demo/cluster-apps")
-	response := emcogithub.CommitFiles(ctx, c, userName, repoName, "main", "New app files added", files)
+	// files = emcogithub.Iterate("/home/ubuntu/go_projects/src/new-k8s-test-code/arc-k8s-demo/cluster-apps")
+	// response := emcogithub.CommitFiles(ctx, c, userName, repoName, "main", "New app files added", files)
 
 	// content1 := "Hi I am test file 2"
 	// treeEntries := make([]*rawgithub.TreeEntry, 0)
@@ -45,10 +46,10 @@ func main() {
 	// })
 
 	// files := []gitprovider.CommitFile{}
-	// //files = emcogithub.Delete("Test-file2", files)
-	// files = emcogithub.Add("Test-file3", "Hi I am test file 3 Updated", files)
+	//files = emcogithub.Delete("Test-file2", files)
+	files = emcogithub.Add("Test-file", "Hi I am a test file", files)
 
-	// response := emcogithub.CommitFiles(ctx, c, userName, repoName, "main", "New Commit", files)
+	response := emcogithub.CommitFiles(ctx, c, userName, repoName, "main", "New Commit", files)
 	if response != nil {
 		fmt.Println(response)
 	}

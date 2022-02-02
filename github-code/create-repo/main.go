@@ -3,9 +3,11 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/fluxcd/go-git-providers/github"
 	"github.com/fluxcd/go-git-providers/gitprovider"
+         log "gitlab.com/project-emco/core/emco-base/src/orchestrator/pkg/infra/logutils"
 )
 
 const (
@@ -15,9 +17,9 @@ const (
 func main() {
 	// Create a new client
 	ctx := context.Background()
-	githubToken := "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"
+	githubToken := os.Getenv("GITTOKEN")
 	userName := "chitti-intel"
-	repoName := "Azure-test-repo-two"
+	repoName := "Azure-test-repo-four"
 	desc := "This repo contains azure arc and git golang code"
 	c, err := github.NewClient(gitprovider.WithOAuth2Token(githubToken))
 
@@ -69,4 +71,5 @@ func createRepo(ctx context.Context, c gitprovider.Client, repoName string, user
 		fmt.Println(err)
 	}
 	fmt.Println(userRepo)
+        log.Info("Repo Created",log.Fields{})
 }

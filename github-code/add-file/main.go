@@ -20,7 +20,7 @@ const (
 func main() {
 
 	ctx := context.Background()
-	githubToken := "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"
+	githubToken := os.Getenv("GITTOKEN")
 	userName := "chitti-intel"
 	repoName := "Azure-test-repo"
 	branch := "main"
