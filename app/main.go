@@ -2,18 +2,37 @@ package main
 
 import (
 	"context"
-	"emcogithub"
+	"emcogit"
 	"fmt"
 	"os"
 
 	"github.com/fluxcd/go-git-providers/gitprovider"
 )
 
+func convertToCommitFile(ref interface{}) []gitprovider.CommitFile {
+	var exists bool
+	switch ref.(type) {
+	case []gitprovider.CommitFile:
+		exists = true
+	default:
+		exists = false
+	}
+	var rf []gitprovider.CommitFile
+	// Create rf is doesn't exist
+	if !exists {
+		rf = []gitprovider.CommitFile{}
+	} else {
+		rf = ref.([]gitprovider.CommitFile)
+	}
+	return rf
+}
+
 func main() {
 
-	repoName := "Azure-test-repo-three"
-	// path := "arc-k8s-demo/namespaces/team-b.yaml"
+	repoName := "git-go-test-five"
+	//path := "arc-k8s-demo"
 	userName := "chitti-intel"
+	gitType := "github"
 	githubToken := os.Getenv("GITTOKEN")
 	// commitMessage := "Deleting File"
 	// Create a new client
@@ -24,7 +43,7 @@ func main() {
 	// Delete file from repoS
 	// emcogithub.DeleteFile(ctx, *client, userName, repoName, path, commitMessage)
 
-	c, err := emcogithub.CreateClient(githubToken)
+	c, err := emcogit.CreateClient(githubToken, gitType)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -47,9 +66,10 @@ func main() {
 
 	// files := []gitprovider.CommitFile{}
 	//files = emcogithub.Delete("Test-file2", files)
-	files = emcogithub.Add("Test-file", "Hi I am a test file", files)
+	files = emcogit.Add("test-repo/Test-file-feb7", "Hi I am a test file", files, gitType).([]gitprovider.CommitFile)
+	// files = emcogit.Delete(path, files, gitType)
 
-	response := emcogithub.CommitFiles(ctx, c, userName, repoName, "main", "New Commit", files)
+	response := emcogit.CommitFiles(ctx, c, userName, repoName, "main", "New Commit", files, gitType)
 	if response != nil {
 		fmt.Println(response)
 	}
